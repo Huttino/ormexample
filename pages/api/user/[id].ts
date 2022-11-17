@@ -1,8 +1,8 @@
-import { PrismaClient } from "@prisma/client";
 import { NotFoundError } from "@prisma/client/runtime";
 import { NextApiRequest, NextApiResponse } from "next";
+import { Prisma } from "../../../util/db.serve";
 
-const prisma = new PrismaClient()
+const prisma = Prisma.getPrisma()
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	const { id } = req.query
 	switch (req.method) {

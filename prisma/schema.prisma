@@ -18,31 +18,31 @@ id Int @id @default(autoincrement())
 }
 
 model Teacher {
-  id Int @id 
   user User @relation(fields:[id],references: [id])
+  id Int @unique @id
   reservationRequests ReservationRequest[]
   reservations  Reservation[]
 }
 
 model ReservationRequest{
   id Int @id @default(autoincrement())
-  date DateTime @db.Date
-  hours Int 
+  start DateTime @db.DateTime()
+  end DateTime @db.DateTime()
   lessonName String @db.VarChar(255)
-  teacher Teacher? @relation(references: [id],fields: [teacherId])
-  teacherId Int?
-  classRoom ClassRoom? @relation(references: [id], fields:[classRoomId])
-  classRoomId Int?
+  teacher Teacher @relation(references: [id],fields: [teacherId])
+  teacherId Int
+  classRoom ClassRoom @relation(references: [id], fields:[classRoomId])
+  classRoomId Int
 }
 
 model Reservation{
   id Int @id @default(autoincrement())
   lessonName String @db.VarChar(255)
-  date DateTime @db.Date
-  hours Int
-  teacher Teacher? @relation(references: [id],fields: [teacherId])
-  teacherId Int?
-  classRoom ClassRoom? @relation(references: [id],fields: [classRoomId])
+  start DateTime @db.DateTime()
+  end DateTime @db.DateTime()
+  teacher Teacher @relation(references: [id],fields: [teacherId])
+  teacherId Int
+  classRoom ClassRoom @relation(references: [id],fields: [classRoomId])
   classRoomId Int
 }
 model ClassRoom{

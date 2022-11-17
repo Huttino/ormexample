@@ -1,8 +1,9 @@
-import { Teacher } from "@prisma/client";
 import { NotFoundError } from "@prisma/client/runtime";
 import { NextApiRequest, NextApiResponse } from "next";
 import { Prisma } from "../../../util/db.serve";
+
 const prisma = Prisma.getPrisma()
+
 export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse
@@ -34,8 +35,8 @@ export async function saveRequest(req: NextApiRequest, res: NextApiResponse) {
 						id: body.classRoomId
 					}
 				},
-				date: body.date,
-				hours: body.hours
+				start: body.start,
+				end: body.end
 			}
 		})
 		return res.status(302).json({ newRequest, success: true })

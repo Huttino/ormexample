@@ -1,6 +1,6 @@
-import { PrismaClient } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
-let prisma = new PrismaClient()
+import { Prisma } from "../../util/db.serve";
+const prisma = Prisma.getPrisma()
 export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse) {

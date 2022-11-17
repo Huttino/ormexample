@@ -1,6 +1,22 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import { AppProps } from "next/app";
+import "../styles/globals.css";
+import "bootstrap/dist/css/bootstrap.css";
+import Layout from "../components/layout";
+import utilStyle from "../styles/utils.module.css";
+import ClassMenu from "../components/classMenu";
+import { UserContext, UserProvider } from "@auth0/nextjs-auth0";
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+function App({ Component, pageProps }: AppProps) {
+  return (
+    <div className={utilStyle.wrapper}>
+      <UserProvider>
+        <Layout>
+          <ClassMenu />
+          <Component {...pageProps} />
+        </Layout>
+      </UserProvider>
+    </div>
+  );
 }
+
+export default App;
