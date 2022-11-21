@@ -7,6 +7,7 @@ import ReservationList from "../../components/reservationList";
 
 function ClassRoomPage({ classRoom }: { classRoom: ClassRoom }) {
   const [reservationsHook, setReservationHook] = useState([] as Reservation[]);
+  useEffect(() => setReservationHook([]), [classRoom.id]);
   return (
     <>
       <Head>
