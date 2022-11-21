@@ -1,7 +1,6 @@
 import { NotFoundError } from "@prisma/client/runtime";
 import { NextApiRequest, NextApiResponse } from "next";
 import { Prisma } from "../../../util/db.serve";
-
 const prisma = Prisma.getPrisma()
 
 export default async function handler(

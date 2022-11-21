@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import Layout from "../components/layout";
 import utilStyle from "../styles/utils.module.css";
 import ClassMenu from "../components/classMenu";
-import { UserContext, UserProvider } from "@auth0/nextjs-auth0";
+import { UserProvider } from "@auth0/nextjs-auth0";
 
 function App({ Component, pageProps }: AppProps) {
   return (
