@@ -39,7 +39,6 @@
   margin: 0;
   text-align: center;
   overflow-y: scroll;
-  white-space: nowrap;
 }
 
 .listItem {
@@ -66,7 +65,9 @@
   align-items: stretch;
 }
 .content {
-  width: 100%;
+  margin-top: 20px;
+  margin-left: 30px;
+  margin-right: 30px;
 }
 .free {
   background-color: rgb(0, 97, 0);

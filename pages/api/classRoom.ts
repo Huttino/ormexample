@@ -1,4 +1,4 @@
-import { ClassRoom, Reservation } from "@prisma/client";
+import { ClassRoom } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { Prisma } from "../../util/db.serve";
 

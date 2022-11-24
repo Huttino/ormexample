@@ -1,15 +1,22 @@
 import { ClassRoom, Reservation, ReservationRequest } from "@prisma/client";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import utilStyle from "../styles/utils.module.css";
 import ClassTile from "./classTile";
 
 export default function ClassMenu() {
-  console.log(new Date().getTime());
   const [data, setData] = useState(
     [] as { classRoom: ClassRoom; reservations: ReservationRequest[] }[]
   );
   const [loading, setLoading] = useState(false);
+  const [timetoUpdate, setTimetoUpdate] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      if (timetoUpdate) setTimetoUpdate(false);
+      else setTimetoUpdate(true);
+    }, 60000);
+  }, [timetoUpdate]);
+
   useEffect(() => {
     setLoading(true);
     fetch("/api/classRoom")
@@ -28,7 +35,7 @@ export default function ClassMenu() {
           setLoading(false);
         }
       );
-  }, []);
+  }, [timetoUpdate]);
   if (loading) return <div>Loading...</div>;
   if (!data) return <div>No ClassRooms</div>;
   else

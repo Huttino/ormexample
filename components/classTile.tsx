@@ -16,7 +16,7 @@ export default function ClassTile(data: {
         <br />
         <b>
           Occupied Until:{" "}
-          {String(endTime.getHours()).padStart(2, "0") +
+          {String(endTime.getHours() - 1).padStart(2, "0") +
             ":" +
             String(endTime.getMinutes()).padStart(2, "0")}
         </b>

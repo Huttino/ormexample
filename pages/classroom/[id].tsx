@@ -4,6 +4,8 @@ import { getClassRoom } from "../api/classRoom/[id]";
 import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import ReservationList from "../../components/reservationList";
+import utilStyle from "../../styles/utils.module.css";
+import Link from "next/link";
 
 function ClassRoomPage({ classRoom }: { classRoom: ClassRoom }) {
   const [reservationsHook, setReservationHook] = useState([] as Reservation[]);
@@ -14,6 +16,7 @@ function ClassRoomPage({ classRoom }: { classRoom: ClassRoom }) {
         <title>{classRoom.name}</title>
       </Head>
       <h1>{classRoom.name}</h1>
+      <Link href={`/classroom/reservation/${classRoom.id}`}>Prenota</Link>
       <Calendar
         locale="en-EN"
         value={new Date()}
@@ -21,7 +24,9 @@ function ClassRoomPage({ classRoom }: { classRoom: ClassRoom }) {
           setReservationHook(await getReservationForDate(value, classRoom.id));
         }}
       ></Calendar>
-      <ReservationList reservations={reservationsHook} />
+      <div className={utilStyle.list}>
+        <ReservationList reservations={reservationsHook} />
+      </div>
     </>
   );
 }

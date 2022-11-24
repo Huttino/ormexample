@@ -1,9 +1,10 @@
 import { ClassRoom, PrismaClient } from "@prisma/client"
 import { NotFoundError } from "@prisma/client/runtime"
 import { NextApiRequest, NextApiResponse } from "next/types"
+import { Prisma } from "../../../util/db.serve"
 
 
-const prisma = new PrismaClient()
+const prisma = Prisma.getPrisma()
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	const { id } = req.query
 	switch (req.method) {
@@ -45,7 +46,6 @@ export async function getClassRoom(id: number) {
 			return { classRoom: { id: x.id, name: x.name, location: x.location } as ClassRoom, reservations: x.reservations }
 		}
 	)
-	console.log(toRet)
 	return toRet
 }
 
