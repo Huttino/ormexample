@@ -34,28 +34,10 @@ export default async function handler(
 export async function getAllClassRooms() {
 	const nowDate = new Date()
 	nowDate.setHours(nowDate.getHours() + 1)
-	const classList = await prisma.classRoom.findMany({
-		include: {
-			reservations: {
-				where: {
-					AND: [
-						{
-							start: {
-								lt: nowDate.toISOString()
-							},
-						}, {
-							end: {
-								gt: nowDate.toISOString()
-							}
-						}
-					]
-				}
-			}
-		}
-	}).then(x => {
+	const classList = await prisma.classRoom.findMany().then(x => {
 		return x.map(y => {
 			const element: ClassRoom = { id: y.id, name: y.name, location: y.location }
-			return { classRoom: element, reservations: y.reservations }
+			return { classRoom: element }
 		})
 	})
 	return classList
