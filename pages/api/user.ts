@@ -22,11 +22,7 @@ export async function postUser(req: NextApiRequest, res: NextApiResponse) {
 	try {
 		const newUser = await prisma.user.create({
 			data: {
-				firstName: body.firstName,
-				lastName: body.lastName,
-				birthDate: body.birthDate,
 				email: body.email,
-				password: body.password
 			}
 		})
 		return res.status(204).json({ newUser, success: true })

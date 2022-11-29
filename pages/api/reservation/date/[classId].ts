@@ -25,17 +25,15 @@ export async function retrieveReservationOf(date: Date, classId: number) {
 	const dayAfter = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1)
 	const ret = await prisma.reservation.findMany({
 		where: {
-			AND: [
-				{
-					start: {
-						lt: dayAfter,
-						gt: today
-					},
-					classRoomId: {
-						equals: classId
-					}
-				}
-			]
+
+			start: {
+				lt: dayAfter,
+				gt: today
+			},
+			classRoomId: {
+				equals: classId
+			}
+
 		}
 	})
 	const response = [] as Reservation[]

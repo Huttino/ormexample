@@ -15,10 +15,14 @@ export default function UserCard() {
   else
     return (
       user && (
-        <div className={utilStyles.userCard + " card"}>
-          <h5>{user.name}</h5>
-          <p>{user.email}</p>
-          <a href="/api/auth/logout">Logout</a>
+        <div className={utilStyles.userCard}>
+          <div className={utilStyles.profileText}>
+            <small>Logged as:</small>
+            <br></br>
+            <small>{user.email}</small>
+            <br></br>
+            <a href="/api/auth/logout">Logout</a>
+          </div>
         </div>
       )
     );

@@ -6,12 +6,11 @@ import UserCard from "./userCard";
 export default function Layout(children: { children: any }) {
   return (
     <>
-      <nav className={utilStyles.navBar}>
-        <div className="sidebar-header">
-          Classes
-          <hr />
+      <nav className={utilStyles.sideMenu}>
+        <div className={utilStyles.menuHeader}>
+          <h2>Classes</h2>
         </div>
-        <main>{children.children[0]}</main>
+        <main className={utilStyles.classList}>{children.children[0]}</main>
         <UserCard></UserCard>
       </nav>
       <main className={utilStyles.content}>{children.children[1]}</main>

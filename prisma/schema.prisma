@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  binaryTargets=["native","darwin"]
 }
 
 datasource db {
@@ -15,8 +16,8 @@ model User{
 model Reservation{
   id Int @id @default(autoincrement())
   lessonName String @db.VarChar(255)
-  start DateTime @db.DateTime()
-  end DateTime @db.DateTime()
+  start DateTime @db.DateTime(0)
+  end DateTime @db.DateTime(0)
   user User @relation(references: [id],fields:[userId])
   userId Int
   classRoom ClassRoom @relation(references: [id],fields: [classRoomId])
