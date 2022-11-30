@@ -15,7 +15,7 @@
     "@mui/material": "^5.10.15",
     "@mui/styled-engine-sc": "^5.10.14",
     "@mui/x-date-pickers": "^5.0.8",
-    "@prisma/client": "^4.6.1",
+    "@prisma/client": "^4.7.0",
     "@types/node": "18.11.9",
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.8",
@@ -36,6 +36,6 @@
     "@types/luxon": "^3.1.0",
     "@types/react-calendar": "^3.9.0",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "prisma": "^4.6.1"
+    "prisma": "^4.7.0"
   }
 }
