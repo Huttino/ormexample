@@ -1,5 +1,5 @@
 import { Reservation } from "@prisma/client";
-import moment from "moment";
+import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
 import utilStyles from "../styles/utils.module.css";
 
@@ -15,8 +15,7 @@ export default function Status(classId: { classId: number }) {
   const [update, setUpdate] = useState(false);
 
   useEffect(() => {
-    const nowDate = new Date();
-    nowDate.setHours(nowDate.getHours() + 1);
+    const nowDate = DateTime.now().setZone("Europe/Rome").toJSDate();
     setLoading(true);
     fetch(`/api/reservation/${classId.classId}`, { method: "GET" })
       .then((res) => {
@@ -30,11 +29,15 @@ export default function Status(classId: { classId: number }) {
           setReservations(ret);
           if (ret.currentReservation) {
             setTimer(
-              moment(ret.currentReservation.end, true).diff(nowDate, "ms")
+              DateTime.fromJSDate(ret.currentReservation.end)
+                .diffNow()
+                .get("millisecond")
             );
           } else if (ret.nextReservation) {
             setTimer(
-              moment(ret.nextReservation.start, true).diff(nowDate, "ms")
+              DateTime.fromJSDate(ret.nextReservation.start)
+                .diffNow()
+                .get("millisecond")
             );
           } else {
             setTimer(86400000);

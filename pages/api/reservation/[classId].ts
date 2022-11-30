@@ -1,4 +1,5 @@
 import { getSession } from "@auth0/nextjs-auth0";
+import { DateTime } from "luxon";
 import { NextApiRequest, NextApiResponse } from "next";
 import { Prisma } from "../../../util/db.serve";
 
@@ -72,8 +73,8 @@ export async function saveReservation({ classRoomId, lessonName, start, end, use
 	else {
 		return await prisma.reservation.create({
 			data: {
-				start: start,
-				end: end,
+				start: DateTime.fromJSDate(start).toJSDate(),
+				end: DateTime.fromJSDate(end).toJSDate(),
 				lessonName: lessonName,
 				classRoom: { connect: { id: classRoomId } },
 				user: { connect: { email: userMail } }
@@ -84,19 +85,18 @@ export async function saveReservation({ classRoomId, lessonName, start, end, use
 	}
 }
 export async function getCurrentReservation(classId: number) {
-	const nowDate = new Date()
-	nowDate.setHours(nowDate.getHours() + 1)
+	const dateNow = DateTime.now().setZone("Europe/Rome").toJSDate()
 	const currentReservation = await prisma.reservation.findFirst({
 		where: {
 			classRoomId: classId,
 			AND: [
 				{
 					start: {
-						lt: nowDate.toISOString()
+						lt: dateNow
 					},
 				}, {
 					end: {
-						gt: nowDate.toISOString()
+						gt: dateNow
 					}
 				}
 			]
@@ -109,7 +109,7 @@ export async function getCurrentReservation(classId: number) {
 		where: {
 			classRoomId: classId,
 			start: {
-				gte: nowDate.toISOString()
+				gte: dateNow
 			}
 		}
 	})
