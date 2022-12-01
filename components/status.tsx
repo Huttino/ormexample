@@ -29,15 +29,17 @@ export default function Status(classId: { classId: number }) {
           setReservations(ret);
           if (ret.currentReservation) {
             setTimer(
-              DateTime.fromJSDate(ret.currentReservation.end)
+              DateTime.fromISO(ret.currentReservation.end.toString())
+                .toLocal()
                 .diffNow()
-                .get("millisecond")
+                .as("milliseconds") + 5000
             );
           } else if (ret.nextReservation) {
             setTimer(
-              DateTime.fromJSDate(ret.nextReservation.start)
+              DateTime.fromISO(ret.nextReservation.start.toString())
+                .toLocal()
                 .diffNow()
-                .get("millisecond")
+                .as("milliseconds") + 5000
             );
           } else {
             setTimer(86400000);
@@ -45,7 +47,6 @@ export default function Status(classId: { classId: number }) {
           setLoading(false);
         }
       );
-    console.log(timer);
     setTimeout(() => {
       if (update) setUpdate(false);
       else setUpdate(true);
@@ -59,12 +60,12 @@ export default function Status(classId: { classId: number }) {
       <>
         <div className={utilStyles.status + " " + utilStyles.occupied}></div>
         <small>
-          <>{reservations.currentReservation.lessonName}</> Ends At{" "}
+          <>{reservations.currentReservation.lessonName}</>
+          <br /> Ends At{" "}
           <>
-            {reservations.currentReservation.end
-              .toString()
-              .split("T")[1]
-              .substring(0, 5)}
+            {DateTime.fromISO(
+              reservations.currentReservation.end.toString()
+            ).toFormat("HH:mm")}
           </>
         </small>
       </>
@@ -75,10 +76,11 @@ export default function Status(classId: { classId: number }) {
         <div className={utilStyles.status + " " + utilStyles.free}></div>
         <small>
           Free until:
-          {reservations.nextReservation.start
-            .toString()
-            .split("T")[1]
-            .substring(0, 5)}
+          <>
+            {DateTime.fromISO(
+              reservations.nextReservation.start.toString()
+            ).toFormat("HH:mm")}
+          </>
         </small>
       </>
     );

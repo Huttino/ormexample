@@ -9,11 +9,17 @@ function ReservationList(data: { reservations: Reservation[] }) {
             <div>
               <h5>{x.lessonName}</h5>
               <small>
-                {"from:" + x.start.toString().split("T")[1].split(".")[0]}
+                {"from " +
+                  x.start.getHours() +
+                  ":" +
+                  x.start.getMinutes().toString().padStart(2, "0")}
               </small>
               <br />
               <small>
-                {"to:" + x.end.toString().split("T")[1].split(".")[0]}
+                {"to " +
+                  x.end.getHours() +
+                  ":" +
+                  x.end.getMinutes().toString().padStart(2, "0")}
               </small>
             </div>
           </li>

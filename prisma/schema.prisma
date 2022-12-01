@@ -6,6 +6,7 @@ generator client {
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
+  
 }
 
 model User{
@@ -16,8 +17,8 @@ model User{
 model Reservation{
   id Int @id @default(autoincrement())
   lessonName String @db.VarChar(255)
-  start DateTime @db.DateTime(0)
-  end DateTime @db.DateTime(0)
+  start DateTime @db.Timestamp()
+  end DateTime @db.Timestamp() 
   user User @relation(references: [id],fields:[userId])
   userId Int
   classRoom ClassRoom @relation(references: [id],fields: [classRoomId])

@@ -1,5 +1,3 @@
-/* eslint-disable @next/next/no-html-link-for-pages */
-import { UserContext } from "@auth0/nextjs-auth0";
 import utilStyles from "../styles/utils.module.css";
 import UserCard from "./userCard";
 

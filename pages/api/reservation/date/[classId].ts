@@ -1,4 +1,5 @@
 import { Reservation } from "@prisma/client";
+import { DateTime } from "luxon";
 import { NextApiRequest, NextApiResponse } from "next";
 import { Prisma } from "../../../../util/db.serve";
 
@@ -21,14 +22,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 }
 
 export async function retrieveReservationOf(date: Date, classId: number) {
-	const today = new Date(date)
-	const dayAfter = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1)
+	const today = DateTime.fromISO(date.toString())
 	const ret = await prisma.reservation.findMany({
 		where: {
 
 			start: {
-				lt: dayAfter,
-				gt: today
+				lt: today.plus({ days: 1 }).toISO(),
+				gt: today.toISO()
 			},
 			classRoomId: {
 				equals: classId

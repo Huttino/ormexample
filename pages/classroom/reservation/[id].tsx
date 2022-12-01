@@ -27,21 +27,22 @@ function ReservationForm({ classRoom }: { classRoom: ClassRoom }) {
       <h1>{classRoom.name}</h1>
       <LocalizationProvider dateAdapter={AdapterLuxon}>
         <DateTimePicker
+          disableMaskedInput={true}
           ampm={false}
           label="From"
           disablePast={true}
           minutesStep={15}
-          minDateTime={DateTime.now().endOf("day")}
-          maxDate={DateTime.now().plus({ months: 1 })}
-          onChange={(value: DateTime | null) => {
-            if (value) setStart(value.setZone("Europe/Rome").toJSDate());
+          minDateTime={DateTime.now().endOf("day").toJSDate()}
+          maxDate={DateTime.now().plus({ months: 1 }).toJSDate()}
+          onChange={(value: Date | null) => {
+            if (value) setStart(value);
           }}
           value={start}
-          onAccept={function (value: DateTime | null): void {
+          onAccept={function (value: Date | null): void {
             if (value) {
               setStartSelected(true);
-              setStart(value.setZone("Europe/Rome").toJSDate());
-              setEnd(value.setZone("Europe/Rome").toJSDate());
+              setStart(value);
+              setEnd(value);
             }
           }}
           renderInput={(props) => <TextField {...props} />}
@@ -49,21 +50,24 @@ function ReservationForm({ classRoom }: { classRoom: ClassRoom }) {
         <br />
         <br />
         <TimePicker
+          disableMaskedInput={true}
           ampm={false}
           minutesStep={15}
           disabled={!startselected}
-          minTime={DateTime.fromJSDate(start)}
-          maxTime={DateTime.fromJSDate(start).plus({ hours: 3 })}
+          minTime={start}
+          maxTime={DateTime.fromISO(start.toString())
+            .plus({ hours: 3 })
+            .toJSDate()}
           disableIgnoringDatePartForTimeValidation={true}
           label="Hours"
           value={end}
-          onChange={(value: DateTime | null) => {
-            if (value) setEnd(value.setZone("Europe/Rome").toJSDate());
+          onChange={(value: Date | null) => {
+            if (value) setEnd(value);
           }}
-          onAccept={function (value: DateTime | null): void {
+          onAccept={function (value: Date | null): void {
             if (value) {
               setTimeSelected(true);
-              setEnd(value.setZone("Europe/Rome").toJSDate());
+              setEnd(value);
             }
           }}
           renderInput={(props) => <TextField {...props} />}
@@ -101,7 +105,7 @@ export async function sendReservation(
     body: JSON.stringify(body),
     headers: { "Content-Type": "application/json; charset=utf8" },
   }).then((res) => {
-    if (res.status != 204) {
+    if (res.status > 300) {
       alert("hour slot occupied");
     } else Router.push(`/classroom/${classRoomId}`);
   });

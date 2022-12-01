@@ -6,6 +6,7 @@ import Calendar from "react-calendar";
 import ReservationList from "../../components/reservationList";
 import utilStyle from "../../styles/utils.module.css";
 import Link from "next/link";
+import { DateTime } from "luxon";
 
 function ClassRoomPage({ classRoom }: { classRoom: ClassRoom }) {
   const [reservationsHook, setReservationHook] = useState([] as Reservation[]);
@@ -50,7 +51,17 @@ export async function getReservationForDate(value: Date, classId: number) {
     headers: { "Content-Type": "application/json; charset=utf8" },
   })
     .then((x) => x.json())
-    .then((y) => y.reservations)
+    .then((y) => {
+      (y.reservations as Reservation[]).forEach((z) => {
+        z.end = new Date(
+          DateTime.fromISO(z.end.toString()).toLocal().toJSDate()
+        );
+        z.start = new Date(
+          DateTime.fromISO(z.start.toString()).toLocal().toJSDate()
+        );
+      });
+      return y.reservations;
+    })
     .catch((e) => console.log(e));
   return ret as Reservation[];
 }
