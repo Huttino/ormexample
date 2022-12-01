@@ -1,7 +1,7 @@
 import { ClassRoom, Reservation } from "@prisma/client";
 import Head from "next/head";
 import { getClassRoom } from "../api/classRoom/[id]";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import ReservationList from "../../components/reservationList";
 import utilStyle from "../../styles/utils.module.css";
@@ -10,7 +10,11 @@ import { DateTime } from "luxon";
 
 function ClassRoomPage({ classRoom }: { classRoom: ClassRoom }) {
   const [reservationsHook, setReservationHook] = useState([] as Reservation[]);
-  useEffect(() => setReservationHook([]), [classRoom.id]);
+
+  useEffect(() => {
+    setReservationHook([]);
+  }, [classRoom.id]);
+
   return (
     <>
       <Head>

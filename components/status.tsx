@@ -15,7 +15,6 @@ export default function Status(classId: { classId: number }) {
   const [update, setUpdate] = useState(false);
 
   useEffect(() => {
-    const nowDate = DateTime.now().setZone("Europe/Rome").toJSDate();
     setLoading(true);
     fetch(`/api/reservation/${classId.classId}`, { method: "GET" })
       .then((res) => {
